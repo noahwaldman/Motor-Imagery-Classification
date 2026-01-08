@@ -1,9 +1,21 @@
-Overview:
-This project applies machine learning techniques to decode motor imagery tasks (imagined movements) using the BCI Competition IV Dataset 2a. The goal was to classify EEG signals to distinguish between different motor commands (using left or right hand). 
+# Motor Imagery Classification with Riemannian Geometry
 
-Dataset:
-This project uses the BCI Competition IV 2a dataset.
+## Overview
+Decoding imagined hand movements from EEG signals using machine learning.
 
-Automatic Setup: You do not need to manually download the dataset. The notebook includes a script that automatically checks for the required .mat files (A01T.mat through A09T.mat) and downloads them from the official BNCI Horizon server if they are missing.
+## Key Results
+- **Average Accuracy**: 68.01%
+- **Best Subject**: 88.28% (A08)
+- **Method**: Riemannian geometry + Logistic Regression
 
-Data Handling: Large data files are ignored by .gitignore to keep the repository lightweight.
+## Technical Approach
+1. **Preprocessing**: 7-30 Hz bandpass filter (mu/beta rhythms)
+2. **Feature Extraction**: Covariance matrices + Tangent Space projection
+3. **Classification**: Logistic Regression with GridSearchCV
+4. **Validation**: 5-fold cross-validation
+
+## Dataset
+BCI Competition IV Dataset 2a - 9 subjects, left/right hand imagery
+
+## Technologies
+- Python, MNE, scikit-learn, pyRiemann
