@@ -15,7 +15,7 @@ Decoding imagined hand movements from EEG signals using machine learning.
 4. **Validation**: 5-fold cross-validation
 
 ## Dataset
-BCI Competition IV Dataset 2a - 9 subjects, left/right hand imagery
+BCI Competition IV Dataset 2a - 9 subjects, left/right hand imagery: https://www.kaggle.com/datasets/thngdngvn/bci-competition-iv-data-sets-2a
 
 ## Technologies
 - Python, MNE, scikit-learn, pyRiemann
