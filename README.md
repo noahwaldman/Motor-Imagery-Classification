@@ -1,21 +1,38 @@
-# Motor Imagery Classification with Riemannian Geometry
+# Motor Imagery Classification: Subject-Specific Frequency Optimization
 
-## Overview
-Decoding imagined hand movements from EEG signals using machine learning.
+![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
+![Library](https://img.shields.io/badge/Library-MNE--Python-purple)
+![Method](https://img.shields.io/badge/Method-Riemannian%20Geometry-green)
+![Status](https://img.shields.io/badge/Status-Complete-success)
 
-## Key Results
-- **Average Accuracy**: 68.01%
-- **Best Subject**: 88.28% (A08)
-- **Method**: Riemannian geometry + Logistic Regression
+## 🧠 Project Overview
+This project implements a Brain-Computer Interface (BCI) pipeline to classify **Left vs. Right Hand Motor Imagery** from EEG data.
 
-## Technical Approach
-1. **Preprocessing**: 7-30 Hz bandpass filter (mu/beta rhythms)
-2. **Feature Extraction**: Covariance matrices + Tangent Space projection
-3. **Classification**: Logistic Regression with GridSearchCV
-4. **Validation**: 5-fold cross-validation
+Using the **BCI Competition IV 2a dataset**, I developed a machine learning pipeline that outperforms standard fixed-frequency approaches. By combining **Riemannian Geometry** (Covariance Matrices + Tangent Space Mapping) with a novel **Subject-Specific Frequency Optimization** step, I achieved a **72.0% average accuracy**, improving upon the standard baseline of 68%.
 
-## Dataset
-BCI Competition IV Dataset 2a - 9 subjects, left/right hand imagery: https://www.kaggle.com/datasets/thngdngvn/bci-competition-iv-data-sets-2a
+## 🚀 Key Features
+* **Riemannian Geometry Pipeline:** Utilizes `pyriemann` to map EEG covariance matrices into the Tangent Space, providing robust features for Logistic Regression.
+* **Subject-Specific Optimization:** Instead of a "one-size-fits-all" filter (e.g., 8-30 Hz), this project dynamically assigns the optimal frequency band (Mu vs. Beta) for each subject.
+* **Automated Grid Search:** Systematically tests multiple frequency ranges (`7-30Hz`, `8-35Hz`, `12-30Hz`, `8-14Hz`) to maximize individual decoding performance.
+* **Neurophysiological Validation:** Analyzes *why* certain subjects perform better in specific bands (e.g., "Mu-Dominant" vs. "Beta-Dominant" responders).
 
-## Technologies
-- Python, MNE, scikit-learn, pyRiemann
+## 📊 Results
+The optimization strategy yielded a **~4% improvement** over the standard literature baseline for this dataset.
+
+| Method | Frequency Band | Average Accuracy | Notes |
+| :--- | :--- | :--- | :--- |
+| **Baseline** | Standard (7-30 Hz) | 68.01% | Typical literature setting |
+| **Global Best** | Beta Focus (12-30 Hz) | 70.11% | Best single band for group |
+| **My Approach** | **Subject-Specific** | **72.00%** | **Optimized per user** |
+
+### Key Insights
+* **Inter-Subject Variability:** 4/9 subjects performed best in the **Beta (12-30 Hz)** band, while others required the wider **Extended (8-35 Hz)** band.
+* **The "Mu" Specialist:** Subject `A03T` achieved **80% accuracy** only when isolated to the **Mu (8-14 Hz)** rhythm, a detail lost in broader filters.
+* **Rescuing Performance:** Subject `A05T` improved from **55%** (random chance) to **68%** simply by switching from a broad filter to a Beta-focused filter.
+
+## 🛠️ Installation & Usage
+
+### 1. Clone the Repository
+```bash
+git clone [https://github.com/noahwaldman/Motor-Imagery-Classification.git](https://github.com/noahwaldman/Motor-Imagery-Classification.git)
+cd Motor-Imagery-Classification
