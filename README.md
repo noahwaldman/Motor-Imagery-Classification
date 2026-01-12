@@ -8,7 +8,7 @@
 ## 🧠 Project Overview
 This project implements a Brain-Computer Interface (BCI) pipeline to classify **Left vs. Right Hand Motor Imagery** from EEG data.
 
-Using the **BCI Competition IV 2a dataset**, I developed a machine learning pipeline that outperforms standard fixed-frequency approaches. By combining **Riemannian Geometry** (Covariance Matrices + Tangent Space Mapping) with a novel **Subject-Specific Frequency Optimization** step, I achieved a **72.0% average accuracy**, improving upon the standard baseline of 68%.
+Using the **BCI Competition IV 2a dataset** (https://www.kaggle.com/datasets/thngdngvn/bci-competition-iv-data-sets-2a/data), I developed a machine learning pipeline that outperforms standard fixed-frequency approaches. By combining **Riemannian Geometry** (Covariance Matrices + Tangent Space Mapping) with a novel **Subject-Specific Frequency Optimization** step, I achieved a **72.0% average accuracy**, improving upon the standard baseline of 68%.
 
 ## 🚀 Key Features
 * **Riemannian Geometry Pipeline:** Utilizes `pyriemann` to map EEG covariance matrices into the Tangent Space, providing robust features for Logistic Regression.
