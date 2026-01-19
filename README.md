@@ -28,7 +28,7 @@ The optimization strategy yielded a **~4% improvement** over the standard litera
 | **My Approach** | **Subject-Specific** | **72.00%** | **Optimized per user** |
 
 ### Key Insights
-* **Inter-Subject Variability:** 4/9 subjects performed best in the **Beta (12-30 Hz)** band, while others required the wider **Extended (8-35 Hz)** band.
-* **The "Mu" Specialist:** Subject `A03T` achieved **80% accuracy** only when isolated to the **Mu (8-14 Hz)** rhythm, a detail lost in broader filters.
-* **Rescuing Performance:** Subject `A05T` improved from **55%** (random chance) to **68%** simply by switching from a broad filter to a Beta-focused filter.
+* 4/9 subjects performed best in the **Beta (12-30 Hz)** band, while others required the wider **Extended (8-35 Hz)** band.
+* Subject `A03T` achieved **80% accuracy** only when isolated to the **Mu (8-14 Hz)** rhythm, a detail lost in broader filters.
+* Subject `A05T` improved from **55%** (random chance) to **68%** simply by switching from a broad filter to a Beta-focused filter.
 
