@@ -6,29 +6,57 @@
 ![Status](https://img.shields.io/badge/Status-Complete-success)
 
 ## Project Overview
-This project implements a Brain-Computer Interface (BCI) pipeline to classify **Left vs. Right Hand Motor Imagery** from EEG data.
+This project builds a Brain-Computer Interface (BCI) pipeline to classify **Left vs. Right Hand Motor Imagery** from EEG data using the **BCI Competition IV 2a** dataset.
 
-Using the **BCI Competition IV 2a dataset** (https://www.kaggle.com/datasets/thngdngvn/bci-competition-iv-data-sets-2a/data), I developed a machine learning pipeline that outperforms standard fixed-frequency approaches. By combining **Riemannian Geometry** (Covariance Matrices + Tangent Space Mapping) with a novel **Subject-Specific Frequency Optimization** step, I achieved a **72.0% average accuracy**, improving upon the standard baseline of 68%.
+The current notebook emphasizes **evaluation rigor**:
+- subject-specific band selection is done on **training data only**
+- final metrics are reported on a **held-out test set**
+- confusion matrices are generated from held-out predictions (not training data)
 
-**Note:** The files from the dataset were too large to be uploaded to the repository, so to use the code, you need to download the files from the link above.
+This makes the reported performance more conservative and realistic for generalization.
 
-## Key Features
-* **Riemannian Geometry Pipeline:** Utilizes `pyriemann` to map EEG covariance matrices into the Tangent Space, providing robust features for Logistic Regression.
-* **Subject-Specific Optimization:** Instead of a "one-size-fits-all" filter (e.g., 8-30 Hz), this project dynamically assigns the optimal frequency band (Mu vs. Beta) for each subject.
-* **Automated Grid Search:** Systematically tests multiple frequency ranges (`7-30Hz`, `8-35Hz`, `12-30Hz`, `8-14Hz`) to maximize individual decoding performance.
-* **Neurophysiological Validation:** Analyzes *why* certain subjects perform better in specific bands (e.g., "Mu-Dominant" vs. "Beta-Dominant" responders).
+Dataset link: https://www.kaggle.com/datasets/thngdngvn/bci-competition-iv-data-sets-2a/data  
+Note: `.mat` files are not in this repo due to size; download from Kaggle and place them in the project root.
 
-## Results
-The optimization strategy yielded a **~4% improvement** over the standard literature baseline for this dataset.
+## Methods
+- **Signal stack:** MNE + SciPy
+- **Feature extraction:** Covariance estimation (`pyriemann`) + Tangent Space mapping
+- **Classifier:** Logistic Regression with GridSearchCV
+- **Bands tested:** `7-30 Hz`, `8-35 Hz`, `12-30 Hz`, `8-14 Hz`
+- **Personalization:** Per-subject frequency-band selection
 
-| Method | Frequency Band | Average Accuracy | Notes |
+## Leakage-Safe Holdout Results
+
+| Method | Frequency Band | Mean Holdout Accuracy | Notes |
 | :--- | :--- | :--- | :--- |
-| **Baseline** | Standard (7-30 Hz) | 68.01% | Typical literature setting |
-| **Global Best** | Beta Focus (12-30 Hz) | 70.11% | Best single band for group |
-| **My Approach** | **Subject-Specific** | **72.00%** | **Optimized per user** |
+| Baseline | Standard (7-30 Hz) | 59.83% | Reference setup |
+| Global Best | Beta (12-30 Hz) | 62.30% | Best single band across group |
+| Subject-Specific | Per-subject optimized | **63.07%** | Best overall holdout performance |
 
-### Key Insights
-* 4/9 subjects performed best in the **Beta (12-30 Hz)** band, while others required the wider **Extended (8-35 Hz)** band.
-* Subject `A03T` achieved **80% accuracy** only when isolated to the **Mu (8-14 Hz)** rhythm, a detail lost in broader filters.
-* Subject `A05T` improved from **55%** (random chance) to **68%** simply by switching from a broad filter to a Beta-focused filter.
+### Outcome
+- **+3.24 percentage points** vs baseline
+- **+0.77 percentage points** vs global best single-band approach
+
+### Subject-Level Highlights
+- Beta (12-30 Hz) was selected for **6/9 subjects**
+- Extended (8-35 Hz) was selected for **3/9 subjects**
+- Best subject holdout accuracy: **A08T = 89.66%**
+- Lowest subject holdout accuracy: **A04T = 40.00%**
+
+## Statistical Notes
+Exploratory paired tests (with Bonferroni correction) did not show statistically significant differences between single-band means at `n=9` subjects. This project should be viewed as strong evidence of a useful engineering direction, with larger studies needed for stronger inferential claims.
+
+## Reproducibility
+1. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+2. Download BCI IV 2a `.mat` files from the Kaggle link above.
+3. Place dataset files in the project root.
+4. Run `Motor_Imagery_Decoding.ipynb` top-to-bottom.
+
+## Next Improvements
+- Session-wise or cross-session validation (stronger external validity)
+- Artifact handling with EOG/ICA
+- Baseline comparisons against FBCSP / EEGNet under the same leakage-safe protocol
 
